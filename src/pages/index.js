@@ -1,7 +1,6 @@
 import {Inter} from 'next/font/google'
 import GPTCard from "@/components/gptContainer";
 import Footer from "@/components/footer";
-import cheerio from 'cheerio';
 
 export const runtime = 'experimental-edge';
 
@@ -70,28 +69,14 @@ export async function getServerSideProps(context) {
             throw new Error('Invalid response format');
         }
 
-        // 从返回的数据中提取 URL 列表
-        const urls = data.results.map(item => item.url);
-
-        for (const url of urls) {
-            if (url) {
-                const response = await fetch(url, {
-                    headers: {
-                        'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Mobile Safari/537.36',
-                    }
-                });
-
-                const html = await response.text();
-                console.log(html);
-                const $ = cheerio.load(html);
-                const title = $('title').text();
-                const imageUrl = $('meta[property="og:image"]').attr('content');
-                const description = $('meta[name="description"]').attr('content');
-                const linkUrl = url;
-                console.log(title);
-                gptDataArray.push({title, imageUrl, description, linkUrl});
-            }
+        for (const item of data.results) {
+            const title = item.title;
+            const imageUrl = item.image;
+            const description = item.description;
+            const linkUrl = item.url;
+            gptDataArray.push({title, imageUrl, description, linkUrl});
         }
+
         return {
             props: {gptDataArray}
         };
