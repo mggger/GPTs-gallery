@@ -2,7 +2,6 @@ import {Inter} from 'next/font/google'
 import GPTCard from "@/components/gptContainer";
 import Footer from "@/components/footer";
 import cheerio from 'cheerio';
-import fs from 'fs';
 
 
 export const runtime = 'experimental-edge';
@@ -26,14 +25,14 @@ export default function Home({gptDataArray}) {
                             target="_blank"
                             rel="noopener noreferrer"
                         >
-                            <p className="text-xl text-black" >Created By mggg.cloud </p>
+                            <p className="text-xl text-black">Created By mggg.cloud </p>
                         </a>
                     </div>
                 </div>
 
                 <div
                     className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700/10 after:dark:from-sky-900 after:dark:via-[#0141ff]/40 before:lg:h-[360px] py-24">
-                    <h1 className="text-6xl text-black" >Mggg GPTS Gallery</h1>
+                    <h1 className="text-6xl text-black">Mggg GPTS Gallery</h1>
                 </div>
 
 
@@ -49,7 +48,7 @@ export default function Home({gptDataArray}) {
                     ))}
                 </div>
             </main>
-            <Footer />
+            <Footer/>
         </div>
     )
 }
@@ -59,7 +58,21 @@ export async function getServerSideProps(context) {
     let gptDataArray = [];
 
     try {
-        const urls = fs.readFileSync('public/urls', 'utf8').split('\n');
+        const response = await fetch('https://booki.chat/gpt_urls');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        // 解析响应体为 JSON
+        const data = await response.json();
+
+        // 验证返回数据结构
+        if (!data.success || !data.results) {
+            throw new Error('Invalid response format');
+        }
+
+        // 从返回的数据中提取 URL 列表
+        const urls = data.results.map(item => item.url);
 
         for (const url of urls) {
             if (url) {
