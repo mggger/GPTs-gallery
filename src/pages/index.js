@@ -3,7 +3,6 @@ import GPTCard from "@/components/gptContainer";
 import Footer from "@/components/footer";
 import cheerio from 'cheerio';
 
-
 export const runtime = 'experimental-edge';
 
 const inter = Inter({subsets: ['latin']})
@@ -78,17 +77,18 @@ export async function getServerSideProps(context) {
             if (url) {
                 const response = await fetch(url, {
                     headers: {
-                        'User-Agent': 'Mozilla/5.0 ...',
+                        'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Mobile Safari/537.36',
                     }
                 });
 
                 const html = await response.text();
+                console.log(html);
                 const $ = cheerio.load(html);
                 const title = $('title').text();
                 const imageUrl = $('meta[property="og:image"]').attr('content');
                 const description = $('meta[name="description"]').attr('content');
                 const linkUrl = url;
-
+                console.log(title);
                 gptDataArray.push({title, imageUrl, description, linkUrl});
             }
         }
