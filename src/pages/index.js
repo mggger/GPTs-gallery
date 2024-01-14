@@ -8,6 +8,7 @@ import {HttpsProxyAgent} from 'https-proxy-agent';
 import fs from 'fs';
 import path from 'path';
 
+export const runtime = 'experimental-edge';
 
 const inter = Inter({subsets: ['latin']})
 
