@@ -1,12 +1,9 @@
-import Image from 'next/image'
 import {Inter} from 'next/font/google'
-import fetch from 'node-fetch';
-import {JSDOM} from 'jsdom';
 import GPTCard from "@/components/gptContainer";
 import Footer from "@/components/footer";
-import {HttpsProxyAgent} from 'https-proxy-agent';
+import cheerio from 'cheerio';
 import fs from 'fs';
-import path from 'path';
+
 
 export const runtime = 'experimental-edge';
 
@@ -62,29 +59,21 @@ export async function getServerSideProps(context) {
     let gptDataArray = [];
 
     try {
-        // 读取 public/urls 文件中的 URL
-        const filePath = path.join(process.cwd(), 'public', 'urls');
-        const urls = fs.readFileSync(filePath, 'utf8').split('\n');
+        const urls = fs.readFileSync('public/urls', 'utf8').split('\n');
 
         for (const url of urls) {
             if (url) {
-                // const proxyUrl = 'http://127.0.0.1:1087'; // 代理地址
-                // const agent = new HttpsProxyAgent(proxyUrl);
-
                 const response = await fetch(url, {
-                    // agent: agent,
                     headers: {
                         'User-Agent': 'Mozilla/5.0 ...',
                     }
                 });
 
                 const html = await response.text();
-                const dom = new JSDOM(html);
-                const document = dom.window.document;
-
-                const title = document.querySelector('title').textContent;
-                const imageUrl = document.querySelector('meta[property="og:image"]').getAttribute('content');
-                const description = document.querySelector('meta[name="description"]').getAttribute('content');
+                const $ = cheerio.load(html);
+                const title = $('title').text();
+                const imageUrl = $('meta[property="og:image"]').attr('content');
+                const description = $('meta[name="description"]').attr('content');
                 const linkUrl = url;
 
                 gptDataArray.push({title, imageUrl, description, linkUrl});
