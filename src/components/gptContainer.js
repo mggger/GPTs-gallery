@@ -2,7 +2,7 @@ import React from 'react';
 
 const GPTCard = ({ title, imageUrl, description, linkUrl }) => {
     return (
-        <div className="py-2 px-4">
+        <div className="py-4 px-4">
             <a
                 href={linkUrl}
                 className="group flex flex-col items-center justify-center rounded-2xl shadow-lg transform transition duration-500 hover:scale-110 hover:shadow-2xl bg-gradient-to-r from-blue-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 p-6"
