@@ -1,32 +1,60 @@
 import React from 'react';
 
-const GPTCard = ({ title, imageUrl, description, linkUrl }) => {
+const GPTCard = ({ title, imageUrl, description, linkUrl, videoUrl }) => {
+    if (imageUrl === "") {
+        imageUrl = "https://mggg.cloud/img/penguin.png";
+    }
+
     return (
-        <div className="py-4 px-4">
-            <a
-                href={linkUrl}
-                className="group flex flex-col items-center justify-center rounded-2xl shadow-lg transform transition duration-500 hover:scale-110 hover:shadow-2xl bg-gradient-to-r from-blue-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 p-6"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                <h2 className="mb-4 text-xl md:text-2xl font-bold text-white truncate">
+        <div className="py-4 px-4 w-full max-w-xs">
+            <div className="flex flex-col rounded-2xl shadow-lg transform transition duration-500 hover:scale-110 hover:shadow-2xl bg-gradient-to-r from-white to-sky-300 hover:from-sky-100 hover:to-sky-400 p-6">
+                <h3 className="mb-2 text-lg md:text-xl font-bold text-sky-700 text-center h-16 overflow-y-auto">
                     {title.replace("ChatGPT - ", "")}
-                </h2>
-                <div className="w-36 h-36 lg:w-48 lg:h-48 mb-4">
+                </h3>
+                <div className="w-36 h-36 lg:w-48 lg:h-48 mb-2 ml-6">
                     <img
                         src={imageUrl}
                         alt={title}
-                        className="w-full h-full object-cover rounded-full border-4 border-white shadow"
+                        className="w-full h-full object-cover rounded-full border-4 border-sky-300 shadow"
                     />
                 </div>
-                <p className="text-center text-sm md:text-base text-white max-w-md">
-                    {description}
-                </p>
-            </a>
+                <div className="h-8 overflow-y-auto">
+                    {linkUrl && (
+                        <a
+                            href={linkUrl}
+                            className="mb-4 text-sm md:text-base text-sky-700 underline"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Try it!
+                        </a>
+                    )}
+                </div>
+                <div className="h-32 overflow-y-auto mb-4">
+                    <p className="text-center text-sm md:text-base text-sky-600 max-w-md mb-4">
+                        {description}
+                    </p>
+                </div>
+
+                {videoUrl && (
+                    <div className="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden">
+                        <iframe
+                            src={videoUrl}
+                            title="YouTube video"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                            className="w-full h-full"
+                        ></iframe>
+                    </div>
+                )}
+                {videoUrl && (
+                    <p className="mt-2 text-center text-sm md:text-base text-sky-600">
+                        Watch the introduction video
+                    </p>
+                )}
+            </div>
         </div>
     );
 };
-
-
 
 export default GPTCard;

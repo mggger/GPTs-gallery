@@ -5,8 +5,8 @@ export default function Document() {
         <Html lang="en">
             <Head>
                 <link rel="icon" href="/mggg-favicon.svg" />
-                <title>Mggg GPTs Gallery - Explore the World of AI Art</title>
-                <meta name="description" content="Mggg GPTs Gallery: Discover the unique and innovative artworks created by Mggg GPTs at our Gallery. Explore a wide range of AI-generated art pieces." />
+                <title>GPTs Workflow Gallery - Explore the World of AI Art</title>
+                <meta name="description" content="GPTs Workflow Gallery: Discover the unique and innovative artworks created by Mggg GPTs at our Gallery. Explore a wide range of AI-generated art pieces." />
                 <meta name="keywords" content="Mggg, GPTs, Gallery, AI Art, AI Gallery, Art Gallery, Artificial Intelligence, Digital Art" />
                 <meta property="og:title" content="Mggg GPTs Gallery - Explore the World of AI Art" />
                 <meta property="og:description" content="Discover the unique and innovative artworks created by Mggg GPTs at our Gallery. Explore a wide range of AI-generated art pieces." />
