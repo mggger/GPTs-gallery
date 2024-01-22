@@ -7,14 +7,13 @@ const Workflow = ({gptData}) => {
     const steps = gptData.steps;
 
     return (
-        <div>
-            <h2 className="text-2xl lg:text-3xl font-bold my-4 mb-4 whitespace-nowrap text-sky-600">
-                {/* 标题颜色调整为天蓝色 */}
-                <span className="text-sky-800 mr-2">{workflow_name}</span>
+        <div className="px-4 sm:px-8">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold my-4 text-sky-600 text-center sm:text-left">
+                <span className="text-sky-800">{workflow_name}</span>
             </h2>
 
-            <div className="flex flex-col lg:flex-row flex-wrap justify-center">
-                {steps.map((ele, index) => (
+            <div className="flex flex-col items-center md:flex-row md:justify-center">
+            {steps.map((ele, index) => (
                     <React.Fragment key={index}>
                         <GPTCard
                             description={ele.description}
