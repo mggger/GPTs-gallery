@@ -4,29 +4,43 @@ export const runtime = 'edge';
 export default async function handler(req, res) {
     if (req.method === 'POST') {
         try {
-            // 转发请求到外部API
+            const {email, question} = await req.json();
+
             const response = await fetch('https://booki.chat/form_submit', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(req.body),
+                body: JSON.stringify({email, question}),
+
             });
 
             const data = await response.text();
 
             if (!response.ok) {
-                res.status(500).json({message: data})
+                return new Response(data, { status: response.status });
             } else {
-                res.status(200).json({message: data})
+                return new Response(JSON.stringify({ message: data }), {
+                    status: 200,
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
             }
         } catch (error) {
-            // 处理错误
-            res.status(500).json({message: error.message});
+            return new Response(JSON.stringify({ message: error.message }), {
+                status: 500,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
         }
     } else {
-        // 处理非POST请求
-        res.setHeader('Allow', ['POST']);
-        res.status(405).end(`Method ${req.method} Not Allowed`);
+        return new Response(`Method ${req.method} Not Allowed`, {
+            status: 405,
+            headers: {
+                'Allow': ['POST'],
+            },
+        });
     }
 }

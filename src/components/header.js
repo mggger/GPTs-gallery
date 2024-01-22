@@ -10,6 +10,8 @@ const Header = () => {
 
     const openModal = () => {
         setIsModalOpen(true);
+        setQuestion("");
+        setEmail("");
         setSubmitStatus('initial');
     };
 
@@ -39,8 +41,6 @@ const Header = () => {
             setErrMsg(error.message);
             setSubmitStatus('failure');
         } finally {
-            setQuestion("");
-            setEmail("");
             setIsLoading(false);
         }
     };
