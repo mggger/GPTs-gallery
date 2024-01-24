@@ -2,12 +2,13 @@ import {Inter} from 'next/font/google'
 import GPTCard from "@/components/gptContainer";
 import Footer from "@/components/footer";
 import Workflow from "@/components/gptWorkflow";
+import GPTSolution from "@/components/gptSolution";
 
 export const runtime = 'experimental-edge';
 
 const inter = Inter({subsets: ['latin']})
 
-export default function Home({gptData}) {
+export default function Home({gptData, euroData}) {
 
     return (
         <div>
@@ -110,6 +111,8 @@ export default function Home({gptData}) {
                 </div>
 
 
+                <GPTSolution data={euroData} />
+
                 <Workflow gptData={gptData} />
             </main>
         </div>
@@ -125,8 +128,15 @@ export async function getServerSideProps(context) {
 
         const gptData = await response.json();
 
+        const response1 = await fetch('https://booki.chat/get_workflow?key=eurostat');
+        if (!response1.ok) {
+            throw new Error(`HTTP error! status: ${response1.status}`);
+        }
+
+        const euroData = await response1.json()
+
         return {
-            props: { gptData }
+            props: { gptData, euroData }
         };
     } catch (error) {
         console.error('Error fetching GPT data:', error.message);

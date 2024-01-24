@@ -7,7 +7,7 @@ const Workflow = ({gptData}) => {
     const steps = gptData.steps;
 
     return (
-        <div className="px-4 sm:px-8">
+        <div className="px-4 sm:px-8 xl:bg-gradient-to-r xl:from-white xl:to-sky-500 xl:w-full">
             <h2 className="text-xl sm:text-2xl md:text-3xl font-bold my-4 text-sky-600 text-center sm:text-left">
                 <span className="text-sky-800">{workflow_name}</span>
             </h2>
